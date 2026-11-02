@@ -1724,3 +1724,315 @@ label small,
     width: 170px;
   }
 }
+/* Small-screen media stays in normal flow: labels, image, then caption. */
+.rental-vehicle {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-content: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+.rental-vehicle > img {
+  margin-top: 0;
+}
+.vehicle-kicker {
+  position: static;
+  justify-self: end;
+  margin: 0;
+  text-align: right;
+}
+.vehicle-footnote {
+  position: static;
+  justify-self: end;
+  margin: 0;
+}
+.footer-grid a:not(.logo) {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 800px) {
+  .rental-hero {
+    padding: 0 0 20px;
+  }
+  .rental-hero-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    min-height: 0;
+  }
+  .rental-intro {
+    padding: 20px 0 0;
+  }
+  .rental-intro > p {
+    max-width: none;
+    margin: 14px 0 18px;
+  }
+  .brand-promise {
+    margin-top: 16px;
+  }
+  .hero-actions {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+  .rental-vehicle {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    align-items: center;
+    justify-items: center;
+    gap: 10px;
+    align-self: auto;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 16px 12px;
+    background: #46608e;
+    border-left: 3px solid var(--gold);
+    border-radius: 3px;
+    overflow: visible;
+  }
+  .rental-vehicle:before,
+  .rental-vehicle:after {
+    display: none;
+  }
+  .rental-vehicle > img {
+    position: static;
+    display: block;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    margin: 0;
+    object-fit: contain;
+    filter: none;
+  }
+  .vehicle-kicker {
+    position: static;
+    display: block;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+    color: #e1e9f5;
+  }
+  .vehicle-footnote {
+    position: static;
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  .vehicle-footnote > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #fff;
+  }
+  .vehicle-footnote small {
+    display: block;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #d9e3f3;
+  }
+  .vehicle-footnote svg {
+    width: 15px;
+    height: 15px;
+  }
+  .booking-shelf {
+    margin-top: 0;
+    padding-bottom: 0;
+  }
+  .rental-services {
+    gap: 30px;
+  }
+  .service-vehicle {
+    height: auto;
+    min-height: 0;
+    align-self: center;
+    margin: 0;
+    padding: 20px 14px;
+    gap: 12px;
+    background: #46608e;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .service-vehicle:before {
+    display: none;
+  }
+  .service-vehicle > img {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    filter: none;
+  }
+  .service-vehicle > span {
+    display: block;
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .rental-hero-grid > *,
+  .service-row > span,
+  .rental-services > *,
+  .section-heading > *,
+  .package-grid > *,
+  .rental-fleet > *,
+  .journey-grid > *,
+  .form-grid > *,
+  .footer-grid > * {
+    min-width: 0;
+  }
+  .service-row > span:nth-child(2) {
+    overflow-wrap: anywhere;
+  }
+  .journey-grid figure,
+  .journey-grid figure:first-child {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+  }
+  .journey-grid figure > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+  }
+  .journey-grid figcaption {
+    position: static;
+    display: block;
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    background: #203a60;
+  }
+  .meta {
+    flex-wrap: wrap;
+  }
+  .image-tag {
+    max-width: calc(100% - 30px);
+    white-space: normal;
+  }
+  .package-body h3,
+  .rental-fleet-card h3 {
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 580px) {
+  .container {
+    width: calc(100% - 32px);
+  }
+  .rental-intro {
+    padding: 16px 0 0;
+  }
+  .rental-hero-grid {
+    gap: 18px;
+  }
+  .rental-hero {
+    padding-bottom: 18px;
+  }
+  .rental-vehicle {
+    padding: 14px 10px 12px;
+    gap: 8px;
+  }
+  .vehicle-kicker {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+  .vehicle-footnote > span {
+    font-size: 12px;
+  }
+  .vehicle-footnote small {
+    font-size: 11px;
+  }
+  .brand-promise {
+    margin-top: 14px;
+  }
+  .section {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  .rental-services {
+    gap: 24px;
+  }
+  .advantages-section {
+    padding: 32px 0;
+  }
+  .section-heading {
+    margin-bottom: 22px;
+  }
+  .rental-fleet,
+  .package-grid {
+    gap: 18px;
+  }
+  .package-image {
+    height: auto;
+    aspect-ratio: 3/2;
+    min-height: 0;
+  }
+  .package-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .package-body > p {
+    min-height: 0;
+    margin-bottom: 16px;
+  }
+  .journey-grid {
+    gap: 12px;
+  }
+  .journey-grid figure:first-child > img {
+    aspect-ratio: 16/9;
+  }
+  .about-grid > img,
+  .detail-image {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+  }
+  .about-grid > img {
+    object-fit: contain;
+    aspect-ratio: auto;
+  }
+  .cta {
+    margin-top: 0;
+    margin-bottom: 32px;
+    padding: 26px 24px;
+  }
+  .footer-grid {
+    gap: 24px 16px;
+    padding-bottom: 28px;
+  }
+  .page-intro {
+    padding: 18px 0 28px;
+  }
+  .page-intro .breadcrumb {
+    margin-bottom: 20px;
+  }
+  .enquiry-layout {
+    gap: 28px;
+  }
+  .enquiry-layout > aside {
+    padding: 0;
+  }
+}
