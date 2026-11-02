@@ -33,12 +33,20 @@ Apply each schema migration once to a fresh database; do not replay an applied m
 
 Set `WEB3FORMS_ACCESS_KEY` as a server-side secret in `.dev.vars` for local testing or in your host's runtime environment for production, then restart/redeploy. Never put the key in browser code. The enquiry form remains visibly unavailable until configured; it does not pretend to send requests. Test delivery to your own inbox before accepting customer enquiries. Provider errors are shown to the visitor, and no booking is claimed as confirmed.
 
+## Deploy to Vercel with Supabase
+
+The Vercel build uses Vinext through Nitro and writes Vercel Build Output to `.vercel/output`; it does not use Next.js's `.next` manifest. In Vercel, set the project root to `website`, use the Other framework preset (or disable framework detection), and set the build command to `npm run build:vercel`. Leave the output directory at Nitro's `.vercel/output`.
+
+Create a Supabase project and run `supabase/schema.sql` in its SQL editor. This creates the content, settings, and rate-limit tables, plus a private `city2trip-media` bucket. In Vercel Project Settings > Environment Variables, set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SESSION_SECRET`, and `ADMIN_PASSWORD_HASH`. Set `SUPABASE_STORAGE_BUCKET` only if you chose a different bucket name. Add `WEB3FORMS_ACCESS_KEY` when enquiry delivery is ready. Keep the service-role key and all other secrets server-side; never use a `NEXT_PUBLIC_` prefix.
+
+Generate the admin password hash and session secret with `npm run setup:admin` in a trusted local checkout, then copy those two values from `.dev.vars` into Vercel's environment settings. The command creates local credentials; do not deploy `.dev.vars` or use the local admin password. Once the variables and schema are in place, redeploy. Content is stored in Supabase and is not copied automatically from local D1.
+
 ## Before public launch
 
 1. Review every service and package; replace sample travel ideas or unpublish them. Verify route, price, inclusions, vehicle capacity and season dates.
 2. Add the real phone number, email, business address and operating cities. Review and complete the privacy notice and retention policy.
 3. Configure a production administrator password verifier and a new random `SESSION_SECRET` of at least 32 characters. Use a separate local bootstrap directory or trusted secret provisioning flow; never reuse the bundled local credentials. Admin sessions expire after eight hours. Rotating the signing secret invalidates all sessions.
-4. Register/deploy through Sites with the existing `DB`/`BUCKET` bindings and committed Drizzle migrations, or another compatible Cloudflare host. No Site project has been registered by this local implementation. Seed production deliberately with verified content; local data is not uploaded automatically.
+4. Deploy through Vercel using the Supabase setup above, or through Sites with the existing `DB`/`BUCKET` bindings and committed Drizzle migrations. Seed production deliberately with verified content; local data is not uploaded automatically.
 5. Set the actual HTTPS website domain in Business settings. Until then, `robots.txt` disallows indexing and the sitemap has no URLs. With a domain configured, canonical URLs, social metadata, structured data and the public sitemap are generated. Admin and API routes remain excluded.
 6. Connect and test Web3Forms, verify the public domain and mobile experience, then configure Google Business Profile and Search Console under the business owner's accounts. SEO foundations do not guarantee a ranking position.
 

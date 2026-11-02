@@ -1,5 +1,7 @@
 import vinext from "vinext";
 import { defineConfig } from "vite";
+import { nitro } from "nitro/vite";
+import { resolve } from "node:path";
 import hostingConfig from "./.openai/hosting.json";
 import { readExecutionProfile } from "./scripts/execution-profile.mjs";
 import { configureToolEnvironment } from "./scripts/tool-environment.mjs";
@@ -37,13 +39,64 @@ const localBindingConfig = {
     : [],
 };
 
-export default defineConfig(async ({ command }) => {
+export default defineConfig(async ({ command, mode }) => {
   configureToolEnvironment(process.cwd());
+  const vercel =
+    mode === "vercel" ||
+    process.env.CITY2TRIP_DEPLOY_TARGET === "vercel" ||
+    process.env.VERCEL === "1";
 
-  // Wrangler snapshots its log path while the Cloudflare plugin is imported.
-  const { cloudflare } = await import("@cloudflare/vite-plugin");
+  const deploymentPlugin = vercel
+    ? nitro({ preset: "vercel" })
+    : await (async () => {
+        // Wrangler snapshots its log path while the Cloudflare plugin is imported.
+        const { cloudflare } = await import("@cloudflare/vite-plugin");
+        return cloudflare({
+          viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
+          inspectorPort: false,
+          config: {
+            ...localBindingConfig,
+            ...(command === "serve"
+              ? {
+                  services: [
+                    {
+                      binding: "CONNECTORS",
+                      service: "sites-connector-preview",
+                      entrypoint: "ConnectorPreview",
+                    },
+                  ],
+                }
+              : {}),
+          },
+          ...(command === "serve"
+            ? {
+                auxiliaryWorkers: [
+                  {
+                    config: {
+                      name: "sites-connector-preview",
+                      main: "./scripts/connector-preview/worker.mjs",
+                      compatibility_date: "2026-05-15",
+                    },
+                  },
+                ],
+              }
+            : {}),
+        });
+      })();
 
   return {
+    ...(vercel
+      ? {
+          resolve: {
+            alias: {
+              "cloudflare:workers": resolve(
+                process.cwd(),
+                "lib/platform-env.vercel.ts",
+              ),
+            },
+          },
+        }
+      : {}),
     server: {
       ...(managedLinux
         ? { host: "0.0.0.0", allowedHosts: ["terminal.local"] }
@@ -54,39 +107,9 @@ export default defineConfig(async ({ command }) => {
     },
     plugins: [
       vinext(),
-      sites({ mockAuth: !managedLinux }),
+      sites({ mockAuth: !managedLinux && !vercel }),
       connectorPreview(),
-      cloudflare({
-        viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
-        inspectorPort: false,
-        config: {
-          ...localBindingConfig,
-          ...(command === "serve"
-            ? {
-                services: [
-                  {
-                    binding: "CONNECTORS",
-                    service: "sites-connector-preview",
-                    entrypoint: "ConnectorPreview",
-                  },
-                ],
-              }
-            : {}),
-        },
-        ...(command === "serve"
-          ? {
-              auxiliaryWorkers: [
-                {
-                  config: {
-                    name: "sites-connector-preview",
-                    main: "./scripts/connector-preview/worker.mjs",
-                    compatibility_date: "2026-05-15",
-                  },
-                },
-              ],
-            }
-          : {}),
-      }),
+      deploymentPlugin,
     ],
   };
 });

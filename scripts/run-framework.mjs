@@ -4,6 +4,9 @@ import { readExecutionProfile } from "./execution-profile.mjs";
 
 const [command, ...args] = process.argv.slice(2);
 if (!["dev", "build"].includes(command)) throw new Error("Expected dev or build.");
+if (args.includes("--mode") && args[args.indexOf("--mode") + 1] === "vercel") {
+  process.env.CITY2TRIP_DEPLOY_TARGET = "vercel";
+}
 const managedLinux = readExecutionProfile() === "managed-linux";
 
 if (managedLinux && command === "build") {

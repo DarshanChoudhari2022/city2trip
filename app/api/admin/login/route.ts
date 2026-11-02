@@ -1,4 +1,4 @@
-import { env } from "cloudflare:workers";
+import { env } from "@/lib/platform-env";
 import { COOKIE, sameOrigin, limit, jsonBody } from "@/lib/auth";
 import { checkPassword, signSession } from "@/lib/security";
 export async function POST(request: Request) {

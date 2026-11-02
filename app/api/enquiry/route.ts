@@ -1,4 +1,4 @@
-import { env } from "cloudflare:workers";
+import { env } from "@/lib/platform-env";
 import { sameOrigin, limit, jsonBody } from "@/lib/auth";
 import { validateEnquiry } from "@/lib/validation";
 export async function POST(request: Request) {

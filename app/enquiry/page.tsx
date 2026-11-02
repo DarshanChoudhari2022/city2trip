@@ -1,4 +1,4 @@
-import { env } from "cloudflare:workers";
+import { env } from "@/lib/platform-env";
 import { Header, Footer, PageIntro } from "@/components/site";
 import EnquiryForm from "@/components/enquiry-form";
 import { readSettings } from "@/lib/repository";

@@ -1,9 +1,10 @@
-import { env } from "cloudflare:workers";
+import { env } from "@/lib/platform-env";
 import { guard } from "@/lib/auth";
+import { hasSupabaseConfig, storageBucket, supabase } from "@/lib/supabase";
 export async function POST(request: Request) {
   const denied = await guard(request);
   if (denied) return denied;
-  if (!env.BUCKET)
+  if (!hasSupabaseConfig() && !env.BUCKET)
     return Response.json(
       { error: "Image storage is not configured." },
       { status: 503 },
@@ -28,11 +29,15 @@ export async function POST(request: Request) {
       ext = "webp";
     if (!ext) throw new Error("Use a JPG, PNG or WebP image.");
     const key = crypto.randomUUID() + "." + ext;
-    await env.BUCKET.put(key, data, {
-      httpMetadata: {
-        contentType: ext === "jpg" ? "image/jpeg" : "image/" + ext,
-      },
-    });
+    const contentType = ext === "jpg" ? "image/jpeg" : "image/" + ext;
+    if (hasSupabaseConfig()) {
+      const { error } = await supabase()
+        .storage.from(storageBucket())
+        .upload(key, data, { contentType, upsert: false });
+      if (error) throw error;
+    } else {
+      await env.BUCKET!.put(key, data, { httpMetadata: { contentType } });
+    }
     return Response.json({ url: "/api/media/" + key });
   } catch (e) {
     return Response.json(

@@ -1,7 +1,8 @@
-import { env } from "cloudflare:workers";
+import { env } from "@/lib/platform-env";
 import { cookies } from "next/headers";
 import { verifySession } from "./security";
 import { database } from "./repository";
+import { hasSupabaseConfig, supabase } from "@/lib/supabase";
 export const COOKIE = "city2trip_admin";
 export async function isAdmin() {
   const token = (await cookies()).get(COOKIE)?.value;
@@ -25,8 +26,18 @@ export async function guard(request: Request) {
   return null;
 }
 export async function limit(request: Request, scope: string, max: number) {
-  const ip = request.headers.get("cf-connecting-ip") || "local";
+  const ip = request.headers.get("x-real-ip") ||
+    request.headers.get("cf-connecting-ip") ||
+    "local";
   const key = scope + ":" + ip + ":" + Math.floor(Date.now() / 900000);
+  if (hasSupabaseConfig()) {
+    const { data, error } = await supabase().rpc("increment_attempt", {
+      attempt_id: key,
+      expires_at: Date.now() + 900000,
+    });
+    if (error) throw error;
+    return Number(data) <= max;
+  }
   const result = await database()
     .prepare(
       "INSERT INTO attempts(id,count,expires) VALUES(?,1,?) ON CONFLICT(id) DO UPDATE SET count=count+1 RETURNING count",

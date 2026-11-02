@@ -1,4 +1,4 @@
-import { env } from "cloudflare:workers";
+import { env } from "@/lib/platform-env";
 import { isAdmin } from "@/lib/auth";
 import { readAll, readSettings } from "@/lib/repository";
 import AdminLogin from "@/components/admin-login";

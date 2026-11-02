@@ -1,4 +1,5 @@
-import { env } from "cloudflare:workers";
+import { env } from "@/lib/platform-env";
+import { hasSupabaseConfig, storageBucket, supabase } from "@/lib/supabase";
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ key: string }> },
@@ -6,12 +7,24 @@ export async function GET(
   const { key } = await params;
   if (!/^[a-f0-9-]+\.(jpg|png|webp)$/.test(key))
     return new Response("Not found", { status: 404 });
-  const object = await env.BUCKET?.get(key);
-  if (!object) return new Response("Not found", { status: 404 });
-  return new Response(object.body, {
+  let body: BodyInit | null;
+  let contentType: string | undefined;
+  if (hasSupabaseConfig()) {
+    const { data, error } = await supabase()
+      .storage.from(storageBucket())
+      .download(key);
+    if (error || !data) return new Response("Not found", { status: 404 });
+    body = data;
+    contentType = data.type;
+  } else {
+    const object = await env.BUCKET?.get(key);
+    if (!object) return new Response("Not found", { status: 404 });
+    body = object.body;
+    contentType = object.httpMetadata?.contentType;
+  }
+  return new Response(body, {
     headers: {
-      "Content-Type":
-        object.httpMetadata?.contentType || "application/octet-stream",
+      "Content-Type": contentType || "application/octet-stream",
       "Cache-Control": "public, max-age=86400",
       "X-Content-Type-Options": "nosniff",
     },
