@@ -46,9 +46,6 @@ export default async function Home() {
         <section className="rental-hero">
           <div className="container rental-hero-grid">
             <div className="rental-intro">
-              <span className="eyebrow">
-                GOSAVION GROUP · VEHICLE & CHAUFFEUR RENTAL
-              </span>
               <h1>
                 Quality car rental.
                 <br />
