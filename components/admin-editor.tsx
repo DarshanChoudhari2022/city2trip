@@ -9,10 +9,17 @@ import {
   LogOut,
   ArrowUpRight,
   Save,
+  Inbox,
 } from "lucide-react";
 import { Logo, PackageCard } from "./site";
+import BookingInbox from "./booking-inbox";
 import { isVisible, type ContentItem, type Settings } from "@/lib/validation";
-type Tab = "Overview" | "Tour packages" | "Services" | "Business settings";
+type Tab =
+  | "Overview"
+  | "Tour packages"
+  | "Services"
+  | "Business settings"
+  | "Booking requests";
 const blankItem = (kind: "package" | "service"): ContentItem => ({
   id: "",
   kind,
@@ -161,6 +168,7 @@ export default function AdminEditor({
         <aside className="admin-sidebar">
           {[
             ["Overview", LayoutDashboard],
+            ["Booking requests", Inbox],
             ["Tour packages", Map],
             ["Services", CarFront],
             ["Business settings", SettingsIcon],
@@ -288,7 +296,11 @@ export default function AdminEditor({
                 </label>
                 <label className="span-2">
                   Destination / route <small>(optional)</small>
-                  <input value={editing.destination||''} onChange={e=>change('destination',e.target.value)} maxLength={250}/>
+                  <input
+                    value={editing.destination || ""}
+                    onChange={(e) => change("destination", e.target.value)}
+                    maxLength={250}
+                  />
                 </label>
                 <label className="span-2">
                   Short description
@@ -476,6 +488,8 @@ export default function AdminEditor({
                 </div>
               )}
             </form>
+          ) : tab === "Booking requests" ? (
+            <BookingInbox />
           ) : tab === "Overview" ? (
             <>
               <div className="admin-stats">
@@ -519,7 +533,7 @@ export default function AdminEditor({
                   <li>
                     {enquiriesEnabled
                       ? "Web3Forms is configured. Verify delivery before launch."
-                      : "Web3Forms is not connected. Website enquiries cannot be sent yet."}
+                      : "Booking requests are saved in admin. Web3Forms email notifications are not configured yet."}
                   </li>
                   <li>
                     Review sample packages, confirm your real services and
@@ -585,10 +599,90 @@ export default function AdminEditor({
                 </label>
               </div>
               <h3>Vehicle categories</h3>
-              <p>Add only vehicle options you can arrange. Leave capacity blank until confirmed.</p>
-              {settings.fleet.map((v,index)=><div className="form-grid" key={index}><label>Vehicle category<input value={v.name} required onChange={e=>setSettings({...settings,fleet:settings.fleet.map((f,i)=>i===index?{...f,name:e.target.value}:f)})}/></label><label>Capacity / luggage<input value={v.capacity} onChange={e=>setSettings({...settings,fleet:settings.fleet.map((f,i)=>i===index?{...f,capacity:e.target.value}:f)})}/></label><label>Description<input value={v.description} onChange={e=>setSettings({...settings,fleet:settings.fleet.map((f,i)=>i===index?{...f,description:e.target.value}:f)})}/></label><button className="button secondary" type="button" onClick={()=>setSettings({...settings,fleet:settings.fleet.filter((_,i)=>i!==index)})}>Remove vehicle category</button></div>)}
-              <button className="button secondary" type="button" disabled={settings.fleet.length>=12} onClick={()=>setSettings({...settings,fleet:[...settings.fleet,{name:'',description:'',capacity:''}]})}>Add vehicle category</button>
-              <h3 style={{marginTop:30}}>Frequently asked questions</h3>
+              <p>
+                Add only vehicle options you can arrange. Leave capacity blank
+                until confirmed.
+              </p>
+              {settings.fleet.map((v, index) => (
+                <div className="form-grid" key={index}>
+                  <label>
+                    Vehicle category
+                    <input
+                      value={v.name}
+                      required
+                      onChange={(e) =>
+                        setSettings({
+                          ...settings,
+                          fleet: settings.fleet.map((f, i) =>
+                            i === index ? { ...f, name: e.target.value } : f,
+                          ),
+                        })
+                      }
+                    />
+                  </label>
+                  <label>
+                    Capacity / luggage
+                    <input
+                      value={v.capacity}
+                      onChange={(e) =>
+                        setSettings({
+                          ...settings,
+                          fleet: settings.fleet.map((f, i) =>
+                            i === index
+                              ? { ...f, capacity: e.target.value }
+                              : f,
+                          ),
+                        })
+                      }
+                    />
+                  </label>
+                  <label>
+                    Description
+                    <input
+                      value={v.description}
+                      onChange={(e) =>
+                        setSettings({
+                          ...settings,
+                          fleet: settings.fleet.map((f, i) =>
+                            i === index
+                              ? { ...f, description: e.target.value }
+                              : f,
+                          ),
+                        })
+                      }
+                    />
+                  </label>
+                  <button
+                    className="button secondary"
+                    type="button"
+                    onClick={() =>
+                      setSettings({
+                        ...settings,
+                        fleet: settings.fleet.filter((_, i) => i !== index),
+                      })
+                    }
+                  >
+                    Remove vehicle category
+                  </button>
+                </div>
+              ))}
+              <button
+                className="button secondary"
+                type="button"
+                disabled={settings.fleet.length >= 12}
+                onClick={() =>
+                  setSettings({
+                    ...settings,
+                    fleet: [
+                      ...settings.fleet,
+                      { name: "", description: "", capacity: "" },
+                    ],
+                  })
+                }
+              >
+                Add vehicle category
+              </button>
+              <h3 style={{ marginTop: 30 }}>Frequently asked questions</h3>
               {settings.faqs.map((faq, index) => (
                 <div className="faq-editor" key={index}>
                   <label>

@@ -6,6 +6,8 @@ A responsive chauffeur-driven travel website with a protected, shared content ed
 
 Admin sign-in now requires username `admin` and the existing password. The username can be changed using `ADMIN_USERNAME` in the host environment. See `ADMIN.md` for the full nontechnical editor guide.
 
+Submitted forms are saved privately under **Admin → Booking requests** before optional Web3Forms email delivery. The inbox includes complete trip/contact details, status filtering and pagination. It uses a dedicated `booking:<UUID>` namespace in the existing protected JSON document store; no additional database migration is required. Older email-only submissions are not imported automatically. Run `npm run test:bookings` against the local preview to verify storage, deduplication and private admin access; synthetic records created by that test are removed automatically.
+
 - Start with `npm run dev -- --port 5173 --hostname 127.0.0.1` from this directory.
 - Website: `http://127.0.0.1:5173/`.
 - Content studio: `http://127.0.0.1:5173/admin`.

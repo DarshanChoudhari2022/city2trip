@@ -30,11 +30,11 @@ export default async function Privacy() {
           </p>
           <h2>Enquiry delivery</h2>
           <p>
-            Online enquiry delivery is not active until configured. Once
-            enabled, enquiries are sent using Web3Forms. GosaviOn Group does not
-            store enquiry records in this website’s content database. The
-            business must finalise its contact and retention details before
-            accepting real enquiries.
+            Submitted booking requests are securely stored for the GosaviOn
+            Group team to review and respond to. This includes the trip and
+            contact details you provide. Only the authorised administrator can
+            view these records. When email notifications are configured, these
+            details are also sent through Web3Forms to the business inbox.
           </p>
           <h2>Cookies and website operation</h2>
           <p>
@@ -47,8 +47,8 @@ export default async function Privacy() {
           <h2>Your choices</h2>
           <p>
             Only submit information you wish to share for your travel enquiry.
-            To ask about your information, contact GosaviOn Group using its published
-            business contact details.
+            To ask about your information, contact GosaviOn Group using its
+            published business contact details.
           </p>
           {s.email && (
             <p>

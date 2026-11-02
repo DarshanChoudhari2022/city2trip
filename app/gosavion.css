@@ -1522,3 +1522,205 @@ label small,
     gap: 8px;
   }
 }
+/* Private booking inbox */
+.booking-inbox {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 28px;
+}
+.inbox-toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.inbox-toolbar h2 {
+  font-size: 24px;
+}
+.inbox-toolbar p {
+  font-size: 14px;
+  margin: 10px 0 22px;
+}
+.inbox-filters {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 22px;
+}
+.inbox-filters label {
+  width: 200px;
+}
+.inbox-filters > span {
+  font-size: 13px;
+  color: var(--muted);
+  padding-bottom: 10px;
+}
+.inbox-records {
+  display: grid;
+  gap: 20px;
+}
+.inbox-record {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 24px;
+  background: #fff;
+  overflow-wrap: anywhere;
+}
+.inbox-record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+.inbox-record-header h3 {
+  font-size: 20px;
+  margin-top: 6px;
+}
+.inbox-reference {
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.inbox-record-header p {
+  font-size: 12px;
+  margin: 6px 0 15px;
+}
+.inbox-record-header > label {
+  min-width: 150px;
+}
+.inbox-record select,
+.inbox-filters select {
+  font-size: 16px;
+  min-height: 44px;
+}
+.inbox-route {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f3f6fb;
+  padding: 14px;
+  border-radius: 4px;
+  font-size: 15px;
+}
+.inbox-route strong {
+  font-weight: 600;
+}
+.inbox-route svg {
+  color: var(--teal);
+}
+.inbox-service {
+  font-size: 14px;
+  margin: 13px 0;
+}
+.inbox-contact {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.inbox-contact > a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  color: var(--teal-dark);
+}
+.inbox-contact > button {
+  margin-left: auto;
+  border: 0;
+  background: none;
+  min-height: 44px;
+}
+.inbox-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  margin: 18px 0 0;
+}
+.inbox-details dt {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+.inbox-details dd {
+  font-size: 14px;
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.inbox-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 25px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.inbox-pagination > span {
+  font-size: 13px;
+  color: var(--muted);
+}
+.booking-reference {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 700px) {
+  .booking-inbox {
+    padding: 20px;
+  }
+  .inbox-toolbar {
+    flex-wrap: wrap;
+  }
+  .inbox-toolbar > button {
+    margin-top: -12px;
+    margin-bottom: 15px;
+  }
+  .inbox-record {
+    padding: 18px;
+  }
+  .inbox-record-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .inbox-record-header > label {
+    width: 100%;
+    margin-bottom: 18px;
+  }
+  .inbox-route {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .inbox-contact {
+    gap: 10px;
+  }
+  .inbox-contact > button {
+    margin: 0;
+  }
+  .inbox-details {
+    grid-template-columns: 1fr;
+  }
+  .inbox-pagination {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .inbox-pagination > span {
+    order: 3;
+    width: 100%;
+    text-align: center;
+  }
+  .inbox-pagination .button {
+    font-size: 13px;
+    gap: 8px;
+  }
+  .inbox-filters label {
+    width: 170px;
+  }
+}

@@ -8,6 +8,8 @@ Open `/admin` on the website, or use **Admin** in the footer.
 
 ## Ready to use
 
+- **Booking requests:** new submitted entries appear here, newest first. View name, phone, email, route, date/time, passengers, car details and message. Filter by status, refresh, page through older requests and mark them New, Contacted, Confirmed, Completed or Cancelled. Records are private and saved before email is attempted. Requests submitted before this feature was deployed were email-only and are not automatically imported.
+
 - **Overview:** counts of tour packages, currently visible content and drafts; setup status.
 - **Tour packages:** add or edit destinations, itinerary, descriptions, cover photo, duration, starting price and unit, inclusions/exclusions, category and season label.
 - **Services:** edit the same relevant fields for business/city transfers, family/outstation, spiritual visits, hospital pickup/drop, groups/occasions and hiring a driver for the customer's car.
@@ -21,4 +23,4 @@ Open `/admin` on the website, or use **Admin** in the footer.
 
 ## Outside this admin's scope
 
-Web3Forms emails bookings to the inbox linked to its access key. There is no booking inbox, live availability calendar, payment handling, customer account system, multiple admin roles or password-reset screen in this version. Web3Forms keys, administrator credentials and deployment settings are managed in the host's environment settings.
+Web3Forms also emails bookings to the inbox linked to its access key. There is no live availability calendar, payment handling, customer account system, multiple admin roles or password-reset screen in this version. Web3Forms keys, administrator credentials and deployment settings are managed in the host's environment settings.

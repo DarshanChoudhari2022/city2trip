@@ -4,6 +4,7 @@ export async function submitBooking(
   input: Record<string, unknown>,
   accessKey: string,
   send: typeof fetch = fetch,
+  reference?: string,
 ): Promise<void> {
   if (!accessKey.trim())
     throw new Error(
@@ -26,6 +27,7 @@ export async function submitBooking(
       },
       body: JSON.stringify({
         ...details,
+        ...(reference ? { booking_reference: reference } : {}),
         access_key: accessKey.trim(),
         subject: `GosaviOn Group booking request — ${details.service}`,
         from_name: "GosaviOn Group bookings",

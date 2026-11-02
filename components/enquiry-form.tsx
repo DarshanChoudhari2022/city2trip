@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { ArrowUpRight, CheckCircle2, Info } from "lucide-react";
-import { indiaDate } from "@/lib/validation";
-import { submitBooking } from "@/lib/booking";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { indiaDate, validateEnquiry } from "@/lib/validation";
+import { receiveBooking } from "@/lib/booking-request";
 import { useRef } from "react";
 export default function EnquiryForm({
   accessKey,
@@ -14,12 +14,14 @@ export default function EnquiryForm({
   const [state, setState] = useState("");
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
+  const [reference, setReference] = useState("");
+  const submissionId = useRef<string | null>(null);
+  const submissionSignature = useRef("");
   const [service, setService] = useState(
     defaults.service || "Outstation journey",
   );
   const driverHire = /hire.*driver|driver.*your car/i.test(service);
   const submitting = useRef(false);
-  const enabled = !!accessKey.trim();
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (submitting.current) return;
@@ -28,10 +30,17 @@ export default function EnquiryForm({
     try {
       submitting.current = true;
       setBusy(true);
-      await submitBooking(
+      const signature = JSON.stringify(validateEnquiry(data));
+      if (!submissionId.current || submissionSignature.current !== signature) {
+        submissionId.current = crypto.randomUUID();
+        submissionSignature.current = signature;
+      }
+      const receipt = await receiveBooking(
         { ...data, consent: data.consent === "on" },
         accessKey,
+        submissionId.current,
       );
+      setReference(receipt.reference);
       setSent(true);
     } catch (error) {
       setState(
@@ -48,7 +57,10 @@ export default function EnquiryForm({
     return (
       <div className="success-state" role="status">
         <CheckCircle2 size={44} />
-        <h2>Your booking request has been sent.</h2>
+        <h2>Your booking request has been received.</h2>
+        <p className="booking-reference">
+          Reference: <strong>{reference}</strong>
+        </p>
         <p>
           Our team will contact you to confirm availability, pricing and pickup
           arrangements. Your reservation is confirmed after you agree the
@@ -65,15 +77,6 @@ export default function EnquiryForm({
       <p>
         Send a booking request. Our team will confirm the arrangements with you.
       </p>
-      {!enabled && (
-        <div className="notice">
-          <Info size={20} />
-          <span>
-            Online enquiries are coming soon. You can explore this form, but it
-            cannot send a request yet.
-          </span>
-        </div>
-      )}
       <div className="form-grid">
         <label className="span-2">
           Service or package
@@ -212,12 +215,8 @@ export default function EnquiryForm({
           {state}
         </p>
       )}
-      <button className="button wide" disabled={busy || !enabled}>
-        {busy
-          ? "Sending…"
-          : enabled
-            ? "Send booking request"
-            : "Online enquiries coming soon"}
+      <button className="button wide" disabled={busy}>
+        {busy ? "Sending…" : "Send booking request"}
         <ArrowUpRight size={18} />
       </button>
       <p className="fine-print">
