@@ -8,7 +8,7 @@ if (existsSync(".dev.vars"))
 const password = randomBytes(18).toString("base64url");
 writeFileSync(
   ".dev.vars",
-  `ADMIN_PASSWORD_HASH=${await hashPassword(password)}\nSESSION_SECRET=${randomBytes(48).toString("hex")}\n`,
+  `ADMIN_PASSWORD_HASH=${await hashPassword(password)}\nADMIN_USERNAME=admin\nSESSION_SECRET=${randomBytes(48).toString("hex")}\n`,
   { mode: 0o600 },
 );
 writeFileSync(

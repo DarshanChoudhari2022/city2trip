@@ -4,7 +4,7 @@
 - Rental layout: supplied desktop car-rental reference, adapted to GosaviOn Group services and existing booking enquiries.
 - `vehicle-large.webp`: https://static3.toyotabharat.com/images/showroom/innova-hycross/ageha-blackish.webp
 - `vehicle.webp`: https://static3.toyotabharat.com/images/showroom/innova-hycross/car-color-g-slf.webp
-- `rental-vehicle.webp`: background-isolated version of the manufacturer photograph, processed deterministically with Sharp.
+- `rental-vehicle-v2.png`: high-resolution transparent cutout edited from the manufacturer photograph to remove the studio backdrop and pale edge fringe. Cleanup brief: preserve the exact car, angle, colour, wheels and branding; remove white matte and retain a subtle natural contact shadow.
 - `interior.webp`: https://static3.toyotabharat.com/images/showroom/innova-hycross/comfort-img1.webp
 - `vehicle-detail.webp`: https://static3.toyotabharat.com/images/showroom/innova-hycross/exterior-overview01.webp
 - Scenic and group photography: existing Unsplash photographs used for travel ideas, not a record of this company's customers or owned vehicles.

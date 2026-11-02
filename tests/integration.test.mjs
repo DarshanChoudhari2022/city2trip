@@ -47,7 +47,7 @@ test("unconfigured enquiry never reports success", async () => {
 });
 test("admin can publish and unpublish shared content without exposing drafts", async () => {
   const password = readFileSync(".admin-local.txt", "utf8").split("\n")[2];
-  const login = await send("/api/admin/login", { password });
+  const login = await send("/api/admin/login", { username:'admin',password });
   assert.equal(login.status, 200);
   const cookie = login.headers.get("set-cookie").split(";")[0];
   assert.match(login.headers.get("set-cookie"), /HttpOnly/);

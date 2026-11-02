@@ -1,6 +1,6 @@
 import { env } from "@/lib/platform-env";
 import { COOKIE, sameOrigin, limit, jsonBody } from "@/lib/auth";
-import { checkPassword, signSession } from "@/lib/security";
+import { checkAdminCredentials, signSession } from "@/lib/security";
 export async function POST(request: Request) {
   if (!sameOrigin(request))
     return Response.json({ error: "Invalid request origin." }, { status: 403 });
@@ -19,13 +19,19 @@ export async function POST(request: Request) {
       { status: 429 },
     );
   try {
-    const { password } = await jsonBody(request);
+    const { username, password } = await jsonBody(request);
     if (
-      typeof password !== "string" ||
-      password.length > 256 ||
-      !(await checkPassword(password, env.ADMIN_PASSWORD_HASH))
+      !(await checkAdminCredentials(
+        username,
+        password,
+        env.ADMIN_PASSWORD_HASH,
+        env.ADMIN_USERNAME || "admin",
+      ))
     )
-      return Response.json({ error: "Incorrect password." }, { status: 401 });
+      return Response.json(
+        { error: "Incorrect username or password." },
+        { status: 401 },
+      );
     const token = await signSession(env.SESSION_SECRET);
     return Response.json(
       { ok: true },

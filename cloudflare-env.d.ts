@@ -3,6 +3,7 @@ declare namespace Cloudflare {
     DB?: D1Database;
     BUCKET?: R2Bucket;
     ADMIN_PASSWORD_HASH?: string;
+    ADMIN_USERNAME?: string;
     SESSION_SECRET?: string;
     WEB3FORMS_ACCESS_KEY?: string;
     SUPABASE_URL?: string;

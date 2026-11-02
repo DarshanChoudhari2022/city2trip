@@ -176,7 +176,7 @@ h2 {
   max-width: 120%;
   position: relative;
   margin-top: 35px;
-  filter: drop-shadow(0 16px 12px #15284233);
+  filter: none;
 }
 .vehicle-kicker {
   position: absolute;
@@ -296,7 +296,7 @@ h2 {
   width: 580px;
   max-width: 117%;
   margin-left: -30px;
-  filter: drop-shadow(0 15px 13px #172b3f33);
+  filter: none;
 }
 .service-vehicle > span {
   color: #dce7f7;

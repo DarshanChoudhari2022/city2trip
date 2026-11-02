@@ -1,4 +1,20 @@
 const encoder = new TextEncoder();
+export async function checkAdminCredentials(
+  username: unknown,
+  password: unknown,
+  verifier: string,
+  expectedUsername = "admin",
+): Promise<boolean> {
+  if (
+    typeof username !== "string" ||
+    username.length > 128 ||
+    username.trim() !== (expectedUsername.trim() || "admin")
+  )
+    return false;
+  if (typeof password !== "string" || !password || password.length > 256)
+    return false;
+  return checkPassword(password, verifier);
+}
 const hex = (b: ArrayBuffer) =>
   Array.from(new Uint8Array(b), (v) => v.toString(16).padStart(2, "0")).join(
     "",

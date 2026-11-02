@@ -1,5 +1,7 @@
 # Vercel + Supabase
 
+Admin sign-in requires username `admin` and the existing password. `ADMIN_USERNAME` is optional and defaults to `admin`; no environment change is required to use that default. Deploy the updated source to activate the username field.
+
 1. In Supabase SQL Editor, run `supabase/setup.sql` once. This creates the shared content/settings tables, rate-limit function, row-level security and private `city2trip-media` image bucket, and inserts sample content without replacing existing records.
 2. In Vercel Project Settings, set Root Directory to `website`, Framework Preset to Other and Build Command to `npm run build:vercel`. The tracked `vercel.json` configures the build; Nitro produces Vercel Build Output under `.vercel/output`. Keep Output Directory at its default.
 3. In Settings → Environment Variables, import the contents of the local ignored `.vercel.env.local` file. Select Production and, if desired, Preview. It contains `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_STORAGE_BUCKET`, `ADMIN_PASSWORD_HASH`, `SESSION_SECRET` and `CITY2TRIP_DEPLOY_TARGET`.

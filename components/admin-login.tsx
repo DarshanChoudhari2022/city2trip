@@ -9,11 +9,13 @@ export default function AdminLogin() {
     setBusy(true);
     setError("");
     try {
-      const password = new FormData(e.currentTarget).get("password");
+      const fields = new FormData(e.currentTarget);
+      const password = fields.get("password");
+      const username = fields.get("username");
       const response = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ username, password }),
       });
       const result = (await response.json()) as { error: string };
       if (!response.ok) throw new Error(result.error);
@@ -28,8 +30,18 @@ export default function AdminLogin() {
     <main className="login-wrap">
       <form className="login-card" onSubmit={submit}>
         <Logo />
-        <h1>A little behind the journeys.</h1>
+        <h1>Admin sign in</h1>
         <p>Sign in to manage services, tour packages and seasonal updates.</p>
+        <label>
+          Username
+          <input
+            name="username"
+            autoComplete="username"
+            defaultValue="admin"
+            required
+            maxLength={128}
+          />
+        </label>
         <label>
           Admin password
           <input
@@ -48,7 +60,9 @@ export default function AdminLogin() {
         <button className="button wide" disabled={busy}>
           {busy ? "Signing in…" : "Sign in to dashboard"}
         </button>
-        <p className="fine-print">Protected access for the GosaviOn Group team.</p>
+        <p className="fine-print">
+          Protected access for the GosaviOn Group team.
+        </p>
         <a href="/" className="text-link">
           Back to website
         </a>

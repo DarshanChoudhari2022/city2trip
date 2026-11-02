@@ -73,7 +73,7 @@ export default async function Home() {
             <div className="rental-vehicle">
               <span className="vehicle-kicker">CITY STREETS. OPEN ROADS.</span>
               <img
-                src="/images/rental-vehicle.webp"
+                src="/images/rental-vehicle-v2.png"
                 alt="Toyota Innova Hycross, illustrative chauffeur-driven vehicle"
                 fetchPriority="high"
               />
@@ -101,7 +101,7 @@ export default async function Home() {
         <section className="section container rental-services">
           <div className="service-vehicle">
             <img
-              src="/images/rental-vehicle.webp"
+              src="/images/rental-vehicle-v2.png"
               alt="Illustrative vehicle for family and business travel"
               loading="lazy"
             />
@@ -208,7 +208,7 @@ export default async function Home() {
                 <div className="fleet-photo">
                   {index < 2 ? (
                     <img
-                      src="/images/rental-vehicle.webp"
+                      src="/images/rental-vehicle-v2.png"
                       alt="Illustrative vehicle; model confirmed on enquiry"
                       loading="lazy"
                     />
