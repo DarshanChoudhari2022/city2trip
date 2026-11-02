@@ -14,7 +14,7 @@ export async function generateMetadata({
   );
   return pageMetadata(
     item?.title || "Service not found",
-    item?.summary || "Explore current City2Trip services.",
+    item?.summary || "Explore current GosaviOn Group services.",
     "/services/" + slug,
   );
 }

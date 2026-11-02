@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 export const generateMetadata = () =>
   pageMetadata(
     "Plan your trip",
-    "Share your travel plans with City2Trip for a personalised chauffeur-driven journey.",
+    "Share your travel plans with GosaviOn Group for a personalised chauffeur-driven journey.",
     "/enquiry",
   );
 export default async function Enquiry({
@@ -33,7 +33,7 @@ export default async function Enquiry({
         />
         <section className="container section enquiry-layout">
           <EnquiryForm
-            enabled={!!env.WEB3FORMS_ACCESS_KEY}
+            accessKey={env.WEB3FORMS_ACCESS_KEY?.trim() || ""}
             defaults={defaults}
           />
           <aside>
@@ -62,7 +62,7 @@ export default async function Enquiry({
                 </a>
               ) : (
                 <p>
-                  Direct contact details will be available when City2Trip
+                  Direct contact details will be available when GosaviOn Group
                   launches.
                 </p>
               )}

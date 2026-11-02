@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/seo";
 export const generateMetadata = () =>
   pageMetadata(
     "Tour packages & personalised getaways",
-    "Discover family getaways and spiritual tour ideas. Customise your route, dates and travel plans with City2Trip.",
+    "Discover family getaways and spiritual tour ideas. Customise your route, dates and travel plans with GosaviOn Group.",
     "/tours",
   );
 export default async function Tours() {

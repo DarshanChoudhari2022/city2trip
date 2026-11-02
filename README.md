@@ -29,9 +29,9 @@ npm run dev -- --port 5173 --hostname 127.0.0.1
 
 Apply each schema migration once to a fresh database; do not replay an applied migration. The seed uses `INSERT OR IGNORE` and does not overwrite edited content. Local D1/R2 state is under `.wrangler/state` and is not committed. Back it up if you want to retain local edits across machines; production has separate D1/R2 storage. The Pages are rendered dynamically so admin publications are read on the next public page request.
 
-## Connect Web3Forms later
+## Web3Forms booking requests
 
-Set `WEB3FORMS_ACCESS_KEY` as a server-side secret in `.dev.vars` for local testing or in your host's runtime environment for production, then restart/redeploy. Never put the key in browser code. The enquiry form remains visibly unavailable until configured; it does not pretend to send requests. Test delivery to your own inbox before accepting customer enquiries. Provider errors are shown to the visitor, and no booking is claimed as confirmed.
+Set `WEB3FORMS_ACCESS_KEY` in Vercel and redeploy the updated code. The booking page passes this public form identifier to the browser, which submits directly to Web3Forms. This works with standard Web3Forms plans; the former server proxy is retired. Supabase credentials remain server-only. See `WEB3FORMS.md` for setup, fields, error states and delivery verification.
 
 ## Deploy to Vercel with Supabase
 

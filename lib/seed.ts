@@ -16,6 +16,27 @@ const base = {
 export const seedItems: ContentItem[] = [
   {
     ...base,
+    id: "hire-driver",
+    kind: "service",
+    slug: "hire-a-driver-for-your-car",
+    title: "Hire a driver for your car",
+    summary:
+      "Your car. Our driver. Arrange a chauffeur for local trips, business travel or an outstation journey.",
+    description:
+      "Already have a car? Hire a driver to take you where you need to go in your own vehicle. Share your pickup point, route, travel dates, vehicle model and whether it is manual or automatic. Driver availability, hours and charges are confirmed before the booking. This is a driver-only service; a rental vehicle is not included.",
+    category: "Driver hire",
+    image: "/images/interior.webp",
+    duration: "As agreed for your journey",
+    priceUnit: "per driver",
+    itinerary:
+      "Local errands & appointments\nOffice and business travel\nFamily outings & outstation trips",
+    inclusions:
+      "Driver service for your own car\nRoute and working hours as agreed in your quote",
+    exclusions:
+      "Vehicle hire is not included. You provide the car. Fuel, tolls, parking and any outstation allowances are confirmed separately.",
+  },
+  {
+    ...base,
     id: "city",
     kind: "service",
     slug: "city-and-business-travel",
@@ -150,7 +171,23 @@ export const seedItems: ContentItem[] = [
   },
 ];
 export const defaultSettings: Settings = {
-  fleet:[{name:'Sedan',description:'For city rides & smaller groups',capacity:''},{name:'SUV / MUV',description:'For family trips & extra space',capacity:''},{name:'Group vehicle',description:'For outings & shared occasions',capacity:''}],
+  fleet: [
+    {
+      name: "Sedan",
+      description: "For city rides & smaller groups",
+      capacity: "",
+    },
+    {
+      name: "SUV / MUV",
+      description: "For family trips & extra space",
+      capacity: "",
+    },
+    {
+      name: "Group vehicle",
+      description: "For outings & shared occasions",
+      capacity: "",
+    },
+  ],
   phone: "",
   email: "",
   address: "",
@@ -158,10 +195,10 @@ export const defaultSettings: Settings = {
   domain: "",
   announcement: "Your plans. Your people. Your kind of journey.",
   about:
-    "City2Trip brings everyday rides and memorable journeys together. From an airport transfer to a family getaway, share your plans and we will help you arrange the right ride.",
+    "GosaviOn Group brings everyday rides and memorable journeys together. From an airport transfer to a family getaway, share your plans and we will help you arrange the right ride.",
   faqs: [
     {
-      question: "How do I book a ride with City2Trip?",
+      question: "How do I book a ride with GosaviOn Group?",
       answer:
         "Share your route, travel date and passenger count through our enquiry form once online enquiries are enabled. Our team will discuss availability and provide a quote. Your trip is booked only after confirmation.",
     },
@@ -173,7 +210,7 @@ export const defaultSettings: Settings = {
     {
       question: "Are these chauffeur-driven rides?",
       answer:
-        "Yes. City2Trip is designed around travel with a driver, including city transfers, outstation journeys and group trips.",
+        "Yes. GosaviOn Group is designed around travel with a driver, including city transfers, outstation journeys and group trips.",
     },
     {
       question: "What does the quoted price include?",

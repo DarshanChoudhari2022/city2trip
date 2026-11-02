@@ -14,7 +14,7 @@ export async function generateMetadata({
   );
   return pageMetadata(
     item?.title || "Package not found",
-    item?.summary || "Explore current City2Trip packages.",
+    item?.summary || "Explore current GosaviOn Group packages.",
     "/tours/" + slug,
   );
 }

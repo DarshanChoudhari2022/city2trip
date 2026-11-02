@@ -20,7 +20,7 @@ const item = {
   summary: "A calm three day journey in the hills.",
   description: "Travel with your family.",
   category: "Family",
-  image: "/images/hero.webp",
+  image: "/images/vehicle.webp",
   duration: "3 days",
   price: "",
   priceUnit: "per vehicle",

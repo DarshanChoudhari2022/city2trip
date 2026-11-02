@@ -10,12 +10,15 @@ import {
 import type { ContentItem, Settings } from "@/lib/validation";
 export function Logo() {
   return (
-    <a href="/" className="logo" aria-label="City2Trip home">
-      <span>
-        city<span className="logo-two">2</span>trip
-        <span className="logo-dot">.</span>
+    <a href="/" className="logo" aria-label="GosaviOn Group home">
+      <img src="/images/gosavion-mark.png" className="brand-mark" alt="" />
+      <span className="brand-wordmark">
+        Gosavi
+        <span className="brand-on">
+          <span>O</span>n
+        </span>
+        <small>GROUP</small>
       </span>
-      <small>LOCAL RIDES. OUTSTATION JOURNEYS.</small>
     </a>
   );
 }
@@ -28,6 +31,7 @@ export function Header() {
           <a href="/services">Our services</a>
           <a href="/tours">Tour packages</a>
           <a href="/#fleet">Our rides</a>
+          <a href="/services/hire-a-driver-for-your-car">Hire a driver</a>
           <a href="/#faqs">FAQs</a>
           <a href="/contact">About us</a>
         </nav>
@@ -40,6 +44,7 @@ export function Header() {
             <a href="/services">Our services</a>
             <a href="/tours">Tour packages</a>
             <a href="/#fleet">Our rides</a>
+            <a href="/services/hire-a-driver-for-your-car">Hire a driver</a>
             <a href="/#faqs">FAQs</a>
             <a href="/contact">About & contact</a>
           </nav>
@@ -55,16 +60,14 @@ export function Footer({ settings }: { settings: Settings }) {
         <div>
           <Logo />
           <p>
-            From your everyday commute
+            Vehicle & chauffeur rental.
             <br />
-            to your next great escape.
+            Local rides. Outstation travel.
           </p>
-          <span className="footer-label">
-            A little closer to where you want to be.
-          </span>
+          <span className="footer-label">Built on trust, Drive by Value.</span>
         </div>
         <div>
-          <h3>Explore City2Trip</h3>
+          <h3>Explore GosaviOn Group</h3>
           <a href="/services">Our services</a>
           <a href="/tours">Tour packages</a>
           <a href="/contact">About & contact</a>
@@ -74,6 +77,7 @@ export function Footer({ settings }: { settings: Settings }) {
           <a href="/services/airport-transfers">Airport transfers</a>
           <a href="/services/family-and-outstation">Outstation journeys</a>
           <a href="/services/group-and-occasions">Group travel</a>
+          <a href="/services/hire-a-driver-for-your-car">Driver for your car</a>
         </div>
         <div>
           <h3>Let’s plan your journey</h3>
@@ -102,7 +106,7 @@ export function Footer({ settings }: { settings: Settings }) {
       </div>
       <div className="container footer-bottom">
         <span>
-          © {new Date().getFullYear()} City2Trip. All rights reserved.
+          © {new Date().getFullYear()} GosaviOn Group. All rights reserved.
         </span>
         <div>
           <a href="/privacy">Privacy policy</a>
@@ -226,15 +230,15 @@ export function CTA() {
   return (
     <section className="container cta">
       <div>
-        <span className="eyebrow">THE NEXT JOURNEY STARTS WITH YOU</span>
+        <span className="eyebrow">GOSAVION GROUP</span>
         <h2>
-          Have a destination in mind?
+          Plan your next journey.
           <br />
-          Let’s get you there.
+          We’ll take care of the drive.
         </h2>
         <p>
-          A quick city ride or a journey worth remembering. We’re here to help
-          you plan.
+          Tell us your route, dates and group size. Get a personalised quote for
+          your trip.
         </p>
       </div>
       <a href="/enquiry" className="button white">

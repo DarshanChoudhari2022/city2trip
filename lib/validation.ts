@@ -30,7 +30,7 @@ export type Settings = {
   domain: string;
   announcement: string;
   faqs: { question: string; answer: string }[];
-  fleet: { name:string; description:string; capacity:string }[];
+  fleet: { name: string; description: string; capacity: string }[];
 };
 const text = (v: unknown, max = 5000) => {
   if (typeof v !== "string" || v.length > max)
@@ -134,8 +134,17 @@ export function isVisible(
 }
 export function validateSettings(input: any): Settings {
   const out: any = {};
-  if(!Array.isArray(input.fleet)||input.fleet.length>12)throw new Error('Use up to 12 vehicle categories.');
-  out.fleet=input.fleet.map((v:any)=>{const vehicle={name:text(v.name,100),description:text(v.description,250),capacity:text(v.capacity,100)};if(!vehicle.name)throw new Error('Vehicle name is required.');return vehicle;});
+  if (!Array.isArray(input.fleet) || input.fleet.length > 12)
+    throw new Error("Use up to 12 vehicle categories.");
+  out.fleet = input.fleet.map((v: any) => {
+    const vehicle = {
+      name: text(v.name, 100),
+      description: text(v.description, 250),
+      capacity: text(v.capacity, 100),
+    };
+    if (!vehicle.name) throw new Error("Vehicle name is required.");
+    return vehicle;
+  });
   for (const k of [
     "phone",
     "email",
@@ -183,6 +192,7 @@ export function validateEnquiry(input: any) {
     "time",
     "returnDate",
     "passengers",
+    "vehicle",
     "service",
     "message",
   ])

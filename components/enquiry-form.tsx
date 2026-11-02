@@ -1,38 +1,37 @@
 "use client";
 import { useState } from "react";
 import { ArrowUpRight, CheckCircle2, Info } from "lucide-react";
-import { validateEnquiry } from "@/lib/validation";
+import { indiaDate } from "@/lib/validation";
+import { submitBooking } from "@/lib/booking";
+import { useRef } from "react";
 export default function EnquiryForm({
-  enabled,
+  accessKey,
   defaults = {},
 }: {
-  enabled: boolean;
+  accessKey: string;
   defaults?: Record<string, string>;
 }) {
   const [state, setState] = useState("");
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
+  const [service, setService] = useState(
+    defaults.service || "Outstation journey",
+  );
+  const driverHire = /hire.*driver|driver.*your car/i.test(service);
+  const submitting = useRef(false);
+  const enabled = !!accessKey.trim();
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (submitting.current) return;
     setState("");
     const data = Object.fromEntries(new FormData(e.currentTarget));
     try {
-      validateEnquiry(data);
-      if (!enabled) {
-        setState(
-          "Online enquiries are not enabled yet. No enquiry has been sent.",
-        );
-        return;
-      }
+      submitting.current = true;
       setBusy(true);
-      const response = await fetch("/api/enquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, consent: data.consent === "on" }),
-      });
-      const result = (await response.json()) as { error: string };
-      if (!response.ok)
-        throw new Error(result.error || "Unable to send enquiry.");
+      await submitBooking(
+        { ...data, consent: data.consent === "on" },
+        accessKey,
+      );
       setSent(true);
     } catch (error) {
       setState(
@@ -41,6 +40,7 @@ export default function EnquiryForm({
           : "Unable to send. Please try again.",
       );
     } finally {
+      submitting.current = false;
       setBusy(false);
     }
   }
@@ -48,10 +48,11 @@ export default function EnquiryForm({
     return (
       <div className="success-state" role="status">
         <CheckCircle2 size={44} />
-        <h2>Your enquiry is on its way.</h2>
+        <h2>Your booking request has been sent.</h2>
         <p>
-          The team will contact you to discuss availability and your quote. This
-          is not a confirmed booking.
+          Our team will contact you to confirm availability, pricing and pickup
+          arrangements. Your reservation is confirmed after you agree the
+          details with us.
         </p>
         <a className="button" href="/">
           Back to home
@@ -59,9 +60,11 @@ export default function EnquiryForm({
       </div>
     );
   return (
-    <form onSubmit={submit} className="enquiry-form">
+    <form onSubmit={submit} className="enquiry-form" aria-busy={busy}>
       <h2>Tell us about your trip</h2>
-      <p>Share a few details. We’ll take it from there.</p>
+      <p>
+        Send a booking request. Our team will confirm the arrangements with you.
+      </p>
       {!enabled && (
         <div className="notice">
           <Info size={20} />
@@ -76,7 +79,8 @@ export default function EnquiryForm({
           Service or package
           <input
             name="service"
-            defaultValue={defaults.service || "Outstation journey"}
+            value={service}
+            onChange={(e) => setService(e.target.value)}
             required
             maxLength={250}
           />
@@ -108,7 +112,7 @@ export default function EnquiryForm({
             name="date"
             defaultValue={defaults.date}
             required
-            min={new Date().toLocaleDateString("en-CA")}
+            min={indiaDate()}
           />
         </label>
         <label>
@@ -152,6 +156,26 @@ export default function EnquiryForm({
           />
         </label>
         <label className="span-2">
+          {driverHire
+            ? "Your car model & transmission"
+            : "Your car / preferred vehicle"}{" "}
+          <small>(optional)</small>
+          <input
+            name="vehicle"
+            placeholder={
+              driverHire
+                ? "e.g. Maruti Baleno, manual"
+                : "Vehicle model or preference"
+            }
+            maxLength={250}
+          />
+          {driverHire && (
+            <small>
+              You provide the car. This request is for a driver only.
+            </small>
+          )}
+        </label>
+        <label className="span-2">
           Email <small>(optional)</small>
           <input
             type="email"
@@ -192,7 +216,7 @@ export default function EnquiryForm({
         {busy
           ? "Sending…"
           : enabled
-            ? "Send my enquiry"
+            ? "Send booking request"
             : "Online enquiries coming soon"}
         <ArrowUpRight size={18} />
       </button>

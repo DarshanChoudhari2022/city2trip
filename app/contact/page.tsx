@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const generateMetadata = () =>
   pageMetadata(
     "About & contact",
-    "Get to know City2Trip and plan your local ride or outstation journey.",
+    "Get to know GosaviOn Group and plan your local ride or outstation journey.",
     "/contact",
   );
 export default async function Contact() {
@@ -15,12 +15,12 @@ export default async function Contact() {
       <Header />
       <main>
         <PageIntro
-          eyebrow="About City2Trip"
+          eyebrow="About GosaviOn Group"
           title="Life happens between destinations."
           description="We’re here for the journeys that connect them."
         />
         <section className="container section about-grid">
-          <img src="/images/hero.webp" alt="A scenic road journey" />
+          <img src="/images/vehicle.webp" alt="A scenic road journey" />
           <div>
             <span className="eyebrow">LOCAL RIDES. OUTSTATION JOURNEYS.</span>
             <h2>

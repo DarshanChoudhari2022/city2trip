@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const generateMetadata = () =>
   pageMetadata(
     "Chauffeur-driven travel services",
-    "Explore City2Trip airport transfers, business travel, family outstation journeys, spiritual trips and group travel.",
+    "Explore GosaviOn Group airport transfers, driver hire for your own car, business travel, family journeys and group travel.",
     "/services",
   );
 export default async function Services() {

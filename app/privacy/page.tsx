@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const generateMetadata = () =>
   pageMetadata(
     "Privacy policy",
-    "How City2Trip handles travel enquiries and website information.",
+    "How GosaviOn Group handles travel enquiries and website information.",
     "/privacy",
   );
 export default async function Privacy() {
@@ -17,7 +17,7 @@ export default async function Privacy() {
         <PageIntro
           eyebrow="Privacy"
           title="Your details, treated thoughtfully."
-          description="How information is handled on the City2Trip website."
+          description="How information is handled on the GosaviOn Group website."
         />
         <article className="container section prose">
           <h2>Travel enquiries</h2>
@@ -31,7 +31,7 @@ export default async function Privacy() {
           <h2>Enquiry delivery</h2>
           <p>
             Online enquiry delivery is not active until configured. Once
-            enabled, enquiries are sent using Web3Forms. City2Trip does not
+            enabled, enquiries are sent using Web3Forms. GosaviOn Group does not
             store enquiry records in this website’s content database. The
             business must finalise its contact and retention details before
             accepting real enquiries.
@@ -47,7 +47,7 @@ export default async function Privacy() {
           <h2>Your choices</h2>
           <p>
             Only submit information you wish to share for your travel enquiry.
-            To ask about your information, contact City2Trip using its published
+            To ask about your information, contact GosaviOn Group using its published
             business contact details.
           </p>
           {s.email && (

@@ -25,7 +25,7 @@ test("public routes render and admin is protected", async () => {
   ]) {
     const response = await fetch(base + path);
     assert.equal(response.status, 200, path);
-    assert.match(await response.text(), /City2Trip/);
+    assert.match(await response.text(), /GosaviOn Group/);
   }
   const admin = await fetch(base + "/admin");
   assert.match(await admin.text(), /Admin password/);

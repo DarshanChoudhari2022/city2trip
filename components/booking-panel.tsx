@@ -7,6 +7,7 @@ import {
   CarFront,
   Route,
   UsersRound,
+  UserRoundCheck,
 } from "lucide-react";
 export default function BookingPanel() {
   const [mode, setMode] = useState("Outstation");
@@ -17,6 +18,7 @@ export default function BookingPanel() {
           ["Outstation", Route],
           ["Local rides", CarFront],
           ["Group travel", UsersRound],
+          ["Hire driver", UserRoundCheck],
         ].map(([label, Icon]: any) => (
           <button
             type="button"
@@ -30,7 +32,11 @@ export default function BookingPanel() {
           </button>
         ))}
       </div>
-      <input type="hidden" name="service" value={mode} />
+      <input
+        type="hidden"
+        name="service"
+        value={mode === "Hire driver" ? "Hire a driver for your car" : mode}
+      />
       <div className="booking-inner">
         <h2>Where are we taking you?</h2>
         <p>Your journey, planned around you.</p>

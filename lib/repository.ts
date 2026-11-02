@@ -1,6 +1,7 @@
 import { env } from "@/lib/platform-env";
 import { hasSupabaseConfig, supabase } from "@/lib/supabase";
 import { defaultSettings } from "./seed";
+import { brandContent } from "./brand";
 import {
   isVisible,
   validateItem,
@@ -19,14 +20,16 @@ export async function readAll(): Promise<ContentItem[]> {
       .select("payload")
       .order("position", { ascending: true });
     if (error) throw error;
-    return data.map((row) =>
-      typeof row.payload === "string" ? JSON.parse(row.payload) : row.payload,
-    ) as ContentItem[];
+    return brandContent(
+      data.map((row) =>
+        typeof row.payload === "string" ? JSON.parse(row.payload) : row.payload,
+      ) as ContentItem[],
+    );
   }
   const result = await database()
     .prepare("SELECT payload FROM content ORDER BY rowid")
     .all<{ payload: string }>();
-  return result.results.map((r) => JSON.parse(r.payload));
+  return brandContent(result.results.map((r) => JSON.parse(r.payload)));
 }
 export async function readPublicContent() {
   return (await readAll()).filter((i) => isVisible(i));
@@ -40,16 +43,21 @@ export async function readSettings(): Promise<Settings> {
       .maybeSingle();
     if (error) throw error;
     const payload = data?.payload;
-    return payload
-      ? { ...defaultSettings, ...(typeof payload === "string" ? JSON.parse(payload) : payload) }
-      : defaultSettings;
+    return brandContent(
+      payload
+        ? {
+            ...defaultSettings,
+            ...(typeof payload === "string" ? JSON.parse(payload) : payload),
+          }
+        : defaultSettings,
+    );
   }
   const row = await database()
     .prepare("SELECT payload FROM settings WHERE id = 'business'")
     .first<{ payload: string }>();
-  return row
-    ? { ...defaultSettings, ...JSON.parse(row.payload) }
-    : defaultSettings;
+  return brandContent(
+    row ? { ...defaultSettings, ...JSON.parse(row.payload) } : defaultSettings,
+  );
 }
 export async function saveItem(raw: unknown) {
   const item = validateItem(raw);

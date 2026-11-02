@@ -1,0 +1,7 @@
+import sharp from 'sharp';
+// Deterministic extraction of the supplied mark and the vehicle photograph.
+const source=process.argv[2];
+if(source){const {data,info}=await sharp(source).extract({left:230,top:150,width:165,height:145}).ensureAlpha().raw().toBuffer({resolveWithObject:true});for(let i=0;i<data.length;i+=4){const max=Math.max(data[i],data[i+1],data[i+2]),min=Math.min(data[i],data[i+1],data[i+2]);if(max>110&&(max-min)/max<.31)data[i+3]=0;}await sharp(data,{raw:info}).trim().png().toFile('public/images/gosavion-mark.png');}
+const {data,info}=await sharp('public/images/vehicle-large.webp').ensureAlpha().raw().toBuffer({resolveWithObject:true});
+for(let i=0;i<data.length;i+=4){const min=Math.min(data[i],data[i+1],data[i+2]);if(min>240)data[i+3]=Math.round(255*(255-min)/15);}
+await sharp(data,{raw:info}).trim().webp({quality:95}).toFile('public/images/rental-vehicle.webp');

@@ -48,7 +48,7 @@ export default function AdminLogin() {
         <button className="button wide" disabled={busy}>
           {busy ? "Signing in…" : "Sign in to dashboard"}
         </button>
-        <p className="fine-print">Protected access for the City2Trip team.</p>
+        <p className="fine-print">Protected access for the GosaviOn Group team.</p>
         <a href="/" className="text-link">
           Back to website
         </a>

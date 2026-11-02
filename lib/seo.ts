@@ -10,19 +10,19 @@ export async function pageMetadata(
     description,
     alternates: domain ? { canonical: domain + path } : undefined,
     openGraph: {
-      title: title + " | City2Trip",
+      title: title + " | GosaviOn Group",
       description,
       type: "website",
-      siteName: "City2Trip",
+      siteName: "GosaviOn Group",
       ...(domain
         ? {
             url: domain + path,
             images: [
               {
-                url: domain + "/images/hero.webp",
+                url: domain + "/images/vehicle.webp",
                 width: 1536,
                 height: 1024,
-                alt: "City2Trip scenic road journey",
+                alt: "GosaviOn Group scenic road journey",
               },
             ],
           }
@@ -32,7 +32,7 @@ export async function pageMetadata(
       card: "summary_large_image" as const,
       title,
       description,
-      ...(domain ? { images: [domain + "/images/hero.webp"] } : {}),
+      ...(domain ? { images: [domain + "/images/vehicle.webp"] } : {}),
     },
   };
 }

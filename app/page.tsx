@@ -1,195 +1,191 @@
-import StructuredData from "@/components/structured-data";
 import {
-  ArrowRight,
   ArrowUpRight,
+  ArrowRight,
+  CarFront,
   ShieldCheck,
   Route,
-  HeartHandshake,
-  MapPin,
-  CarFront,
   UsersRound,
+  UserRoundCheck,
+  BriefcaseBusiness,
+  Plane,
+  HeartHandshake,
   Check,
-  Sun,
-  Headphones,
+  MapPin,
 } from "lucide-react";
 import {
   Header,
   Footer,
   SectionHeading,
-  ServiceCard,
   PackageCard,
   CTA,
 } from "@/components/site";
 import BookingPanel from "@/components/booking-panel";
+import StructuredData from "@/components/structured-data";
 import { readPublicContent, readSettings } from "@/lib/repository";
 import { pageMetadata } from "@/lib/seo";
+export const dynamic = "force-dynamic";
 export const generateMetadata = () =>
   pageMetadata(
-    "Local rides. Outstation journeys.",
-    "Plan chauffeur-driven city transfers, family holidays, spiritual journeys and group travel with City2Trip.",
+    "Car rental & chauffeur services",
+    "GosaviOn Group — car rental, chauffeur services, airport transfers and outstation travel. Built on trust, Drive by Value.",
     "/",
   );
-export const dynamic = "force-dynamic";
 export default async function Home() {
   const [items, settings] = await Promise.all([
     readPublicContent(),
     readSettings(),
   ]);
+  const packages = items
+    .filter((i) => i.kind === "package" && i.featured)
+    .slice(0, 3);
   return (
     <>
       <StructuredData settings={settings} />
       <Header />
       <main>
-        <section className="hero">
-          <img
-            className="hero-background"
-            src="/images/hero.webp"
-            alt="A white SUV on a scenic mountain road"
-            fetchPriority="high"
-          />
-          <div className="container hero-content">
-            <div className="hero-copy">
-              <span className="hero-pill">
-                <span /> A RIDE FOR EVERY REASON
+        <section className="rental-hero">
+          <div className="container rental-hero-grid">
+            <div className="rental-intro">
+              <span className="eyebrow">
+                GOSAVION GROUP · VEHICLE & CHAUFFEUR RENTAL
               </span>
               <h1>
-                Everyday rides.
+                Quality car rental.
                 <br />
-                Extraordinary
-                <br />
-                <span>journeys.</span>
+                For every <em>destination.</em>
               </h1>
               <p>
-                From city streets to roads less travelled.
-                <br />
-                Your people. Your plans. Our ride.
+                Airport transfers, business travel and outstation journeys.{" "}
+                <br />A comfortable ride, with a driver you can count on.
               </p>
-              <div className="hero-promises">
-                <span>
-                  <Check size={16} /> Chauffeur-driven
-                </span>
-                <span>
-                  <Check size={16} /> Made for your plans
-                </span>
+              <div className="hero-actions">
+                <a className="button" href="#plan-your-ride">
+                  Find your ride <ArrowUpRight size={17} />
+                </a>
+                <a href="/services" className="text-link">
+                  Explore our services <ArrowRight size={16} />
+                </a>
+              </div>
+              <div className="brand-promise">
+                <span>Built on trust,</span> Drive by Value.
               </div>
             </div>
-            <BookingPanel />
-          </div>
-          <div className="hero-caption">
-            <MapPin size={15} /> Wherever life takes you.
-          </div>
-        </section>
-        <div className="trust-strip">
-          <div className="container">
-            <span>
-              <ShieldCheck /> Travel with peace of mind
-            </span>
-            <span>
-              <Route /> Flexible journeys
-            </span>
-            <span>
-              <HeartHandshake /> Personalised assistance
-            </span>
-            <span>
-              <CarFront /> A ride for every occasion
-            </span>
-          </div>
-        </div>
-        <section className="section container">
-          <SectionHeading
-            eyebrow="ONE BRAND. EVERY KIND OF JOURNEY."
-            title="A ride for wherever life takes you"
-            description="Workdays, weekends and everything in between. We’ve got a journey for you."
-            href="/services"
-            link="All services"
-          />
-          <div className="service-grid">
-            {items
-              .filter((i) => i.kind === "service")
-              .slice(0, 3)
-              .map((item, index) => (
-                <ServiceCard item={item} index={index} key={item.id} />
-              ))}
+            <div className="rental-vehicle">
+              <span className="vehicle-kicker">CITY STREETS. OPEN ROADS.</span>
+              <img
+                src="/images/rental-vehicle.webp"
+                alt="Toyota Innova Hycross, illustrative chauffeur-driven vehicle"
+                fetchPriority="high"
+              />
+              <div className="vehicle-footnote">
+                <span>
+                  <ShieldCheck size={17} /> Your journey. Our responsibility.
+                </span>
+                <small>Vehicle model subject to availability</small>
+              </div>
+            </div>
           </div>
         </section>
-        <section className="announcement container">
-          <div className="announcement-icon">
-            <Sun size={27} />
+        <section className="container booking-shelf" id="plan-your-ride">
+          <BookingPanel />
+        </section>
+        {settings.announcement && (
+          <div className="container seasonal-message">
+            <span>TRAVEL UPDATE</span>
+            <p>{settings.announcement}</p>
+            <a href="/tours">
+              Explore tours <ArrowRight size={15} />
+            </a>
+          </div>
+        )}
+        <section className="section container rental-services">
+          <div className="service-vehicle">
+            <img
+              src="/images/rental-vehicle.webp"
+              alt="Illustrative vehicle for family and business travel"
+              loading="lazy"
+            />
+            <span>
+              Comfort for the journey.
+              <br />
+              <strong>Care in every detail.</strong>
+            </span>
           </div>
           <div>
-            <strong>{settings.announcement}</strong>
-            <p>Turn a little time off into a journey worth remembering.</p>
-          </div>
-          <a href="/tours">
-            Find your escape <ArrowRight size={18} />
-          </a>
-        </section>
-        <section className="section container">
-          <SectionHeading
-            eyebrow="A LITTLE FURTHER. A LOT MORE MEMORIES."
-            title="Your next escape starts here"
-            description="Thoughtfully planned tour ideas. Personalised around you."
-            href="/tours"
-            link="Explore all packages"
-          />
-          <div className="package-grid">
-            {items
-              .filter((i) => i.kind === "package" && i.featured)
-              .slice(0, 3)
-              .map((item) => (
-                <PackageCard key={item.id} item={item} />
-              ))}
-          </div>
-          {items.filter(i=>i.kind==='package'&&i.featured).slice(0,3).some(i=>i.sample)&&<p className="sample-note">
-            Packages marked “Sample itinerary” are travel ideas. Routes, availability and
-            prices are confirmed with your quote.
-          </p>}
-        </section>
-        <section className="why-section">
-          <div className="container why-grid">
-            <div>
-              <span className="eyebrow">THE CITY2TRIP WAY</span>
-              <h2>
-                Good journeys begin
-                <br />
-                with the little things.
-              </h2>
-              <p>
-                Thoughtful planning. Clear conversations.
-                <br />
-                And room for the moments that matter.
-              </p>
-              <a href="/contact" className="text-link">
-                Get to know us <ArrowRight size={18} />
-              </a>
+            <span className="eyebrow">OUR SERVICES</span>
+            <h2>
+              The right service.
+              <br />
+              For the way you travel.
+            </h2>
+            <p>
+              From a single pickup to a complete itinerary, choose the travel
+              support you need.
+            </p>
+            <div className="service-rows">
+              {items
+                .filter((item) => item.kind === "service" && item.featured)
+                .map((item, index) => {
+                  const Icon =
+                    item.category === "Driver hire"
+                      ? UserRoundCheck
+                      : [Plane, BriefcaseBusiness, Route, UsersRound][
+                          index % 4
+                        ];
+                  return (
+                    <a
+                      href={"/services/" + item.slug}
+                      className="service-row"
+                      key={item.id}
+                    >
+                      <span className="row-icon">
+                        <Icon size={22} />
+                      </span>
+                      <span>
+                        <h3>{item.title}</h3>
+                        <p>{item.summary}</p>
+                      </span>
+                      <ArrowUpRight size={18} />
+                    </a>
+                  );
+                })}
             </div>
-            <div className="benefit-grid">
+          </div>
+        </section>
+        <section className="advantages-section">
+          <div className="container">
+            <SectionHeading
+              eyebrow="WHY GOSAVION"
+              title="Service that earns your trust"
+              description="Clear arrangements. Thoughtful assistance. Travel planned around your needs."
+            />
+            <div className="advantage-grid">
               {[
                 [
                   ShieldCheck,
-                  "Clarity before you travel",
-                  "Know your route, arrangements and quoted inclusions before confirming.",
-                ],
-                [
-                  Route,
-                  "Your trip, your way",
-                  "Choose your stops, your schedule and the people you take along.",
+                  "Secure services",
+                  "Confirm your pickup, route and travel arrangements before the journey.",
                 ],
                 [
                   HeartHandshake,
-                  "A human touch",
-                  "Discuss your plans with a team that understands your journey.",
+                  "Integrity & ethics",
+                  "Clear quotes and an honest conversation about what your trip includes.",
                 ],
                 [
-                  Headphones,
-                  "Help with the details",
-                  "From luggage to pickup points, let’s work out the little things.",
+                  CarFront,
+                  "Vehicle & chauffeur rental",
+                  "A suitable vehicle and driver for city travel or outstation journeys.",
                 ],
-              ].map(([Icon, title, text]: any) => (
-                <div className="benefit" key={title}>
-                  <Icon size={25} />
+                [
+                  Route,
+                  "Flexible travel plans",
+                  "Plan a short transfer, a full day or a multi-day tour with your group.",
+                ],
+              ].map(([Icon, title, description]: any) => (
+                <div className="advantage-card" key={title}>
+                  <Icon size={29} strokeWidth={1.5} />
                   <h3>{title}</h3>
-                  <p>{text}</p>
+                  <p>{description}</p>
                 </div>
               ))}
             </div>
@@ -197,74 +193,123 @@ export default async function Home() {
         </section>
         <section className="section container" id="fleet">
           <SectionHeading
-            eyebrow="FIND YOUR COMFORT ZONE"
-            title="The right ride for your people"
-            description="Tell us your group size and luggage needs. We’ll help arrange a suitable vehicle."
+            eyebrow="VEHICLE OPTIONS"
+            title="Choose the space you need"
+            description="Share your group size and luggage requirements. We’ll confirm a suitable vehicle."
+            href="/enquiry"
+            link="Ask about availability"
           />
-          <div className="fleet-grid">
-            {settings.fleet.map((vehicle) => (
-              <a
-                href={
-                  "/enquiry?service=" + encodeURIComponent(vehicle.name + " enquiry")
-                }
-                className="fleet-card"
-                key={vehicle.name}
-              >
-                <CarFront size={48} strokeWidth={1.2} />
-                <div>
-                  <h3>{vehicle.name}</h3>
-                  <p>{vehicle.description}</p>
-                  <small>{vehicle.capacity||'Model and capacity confirmed on enquiry'}</small>
+          <div className="rental-fleet">
+            {settings.fleet.map((vehicle, index) => (
+              <article className="rental-fleet-card" key={vehicle.name}>
+                <span className="fleet-number">0{index + 1}</span>
+                <h3>{vehicle.name}</h3>
+                <p>{vehicle.description}</p>
+                <div className="fleet-photo">
+                  {index < 2 ? (
+                    <img
+                      src="/images/rental-vehicle.webp"
+                      alt="Illustrative vehicle; model confirmed on enquiry"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <img
+                      src="/images/group.jpg"
+                      alt="Group travel"
+                      loading="lazy"
+                    />
+                  )}
                 </div>
-                <ArrowUpRight size={20} />
-              </a>
+                <div className="fleet-specs">
+                  <span>
+                    <UsersRound size={15} />
+                    {vehicle.capacity || "Capacity on request"}
+                  </span>
+                  <span>
+                    <Check size={15} /> With chauffeur
+                  </span>
+                </div>
+                <a
+                  className="button secondary wide"
+                  href={
+                    "/enquiry?service=" +
+                    encodeURIComponent(vehicle.name + " enquiry")
+                  }
+                >
+                  Enquire now <ArrowUpRight size={17} />
+                </a>
+              </article>
             ))}
           </div>
         </section>
-        <section className="section steps-section">
-          <div className="container">
-            <SectionHeading
-              eyebrow="LESS PLANNING. MORE GOING."
-              title="Your journey, in three easy steps"
-            />
-            <div className="steps">
-              {[
-                [
-                  "01",
-                  "Tell us your plans",
-                  "Where, when and how many. Share the essentials of your trip.",
-                ],
-                [
-                  "02",
-                  "Make it your own",
-                  "Discuss your route, vehicle and a personalised quote.",
-                ],
-                [
-                  "03",
-                  "Confirm & look forward",
-                  "Once the details are agreed, get ready for the journey.",
-                ],
-              ].map(([n, title, text]) => (
-                <div className="step" key={n}>
-                  <span>{n}</span>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </div>
-              ))}
+        {packages.length > 0 && (
+          <section className="section tour-section">
+            <div className="container">
+              <SectionHeading
+                eyebrow="TOURS & OUTSTATION"
+                title="A change of scene starts here"
+                description="Explore a few travel ideas, then customise the route and dates."
+                href="/tours"
+                link="All tour packages"
+              />
+              <div className="package-grid">
+                {packages.map((item) => (
+                  <PackageCard item={item} key={item.id} />
+                ))}
+              </div>
+              {packages.some((i) => i.sample) && (
+                <p className="sample-note">
+                  Packages marked “Sample itinerary” are travel ideas. Final
+                  routes and inclusions are confirmed in your quote.
+                </p>
+              )}
             </div>
+          </section>
+        )}
+        <section className="section container journey-section">
+          <SectionHeading
+            eyebrow="ON THE ROAD"
+            title="Every part of the journey matters"
+            description="Comfortable spaces. Considered details. A route that works for you."
+          />
+          <div className="journey-grid">
+            <figure>
+              <img
+                src="/images/interior.webp"
+                alt="Passenger seating and vehicle interior"
+                loading="lazy"
+              />
+              <figcaption>Room to settle in.</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="/images/vehicle-detail.webp"
+                alt="Exterior detail of an illustrative rental vehicle"
+                loading="lazy"
+              />
+              <figcaption>Ready for the road ahead.</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="/images/group.jpg"
+                alt="People spending time together"
+                loading="lazy"
+              />
+              <figcaption>Bring everyone along.</figcaption>
+            </figure>
           </div>
         </section>
         <section className="section container faq-section" id="faqs">
           <div>
-            <span className="eyebrow">A FEW THINGS YOU MIGHT WONDER</span>
+            <span className="eyebrow">TRAVEL INFORMATION</span>
             <h2>
-              Before you hit
+              A few things
               <br />
-              the road.
+              before you book.
             </h2>
-            <p>Have something else in mind?</p>
-            <a href="/enquiry" className="text-link">
-              Let’s talk about your trip <ArrowUpRight size={18} />
+            <p>Need help with a specific route?</p>
+            <a className="text-link" href="/enquiry">
+              Ask our team <ArrowUpRight size={17} />
             </a>
           </div>
           <div className="faq-list">

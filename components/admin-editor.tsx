@@ -21,7 +21,7 @@ const blankItem = (kind: "package" | "service"): ContentItem => ({
   summary: "",
   description: "",
   category: kind === "package" ? "Family" : "City travel",
-  image: "/images/hero.webp",
+  image: "/images/vehicle.webp",
   duration: "",
   destination: "",
   price: "",
@@ -182,7 +182,7 @@ export default function AdminEditor({
         <main className="admin-main">
           <div className="admin-title">
             <div>
-              <span className="eyebrow">CITY2TRIP CONTENT STUDIO</span>
+              <span className="eyebrow">GOSAVION CONTENT STUDIO</span>
               <h1>
                 {editing
                   ? editing.id
@@ -574,7 +574,7 @@ export default function AdminEditor({
                   </label>
                 ))}
                 <label className="span-2">
-                  About City2Trip
+                  About GosaviOn Group
                   <textarea
                     rows={5}
                     value={settings.about}
