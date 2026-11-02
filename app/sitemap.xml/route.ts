@@ -1,4 +1,5 @@
 import { readPublicContent, readSettings } from "@/lib/repository";
+import { siteOrigin } from "@/lib/seo-metadata";
 export async function GET() {
   const { domain } = await readSettings();
   const items = await readPublicContent();
@@ -13,14 +14,13 @@ export async function GET() {
       (i) => "/" + (i.kind === "package" ? "tours" : "services") + "/" + i.slug,
     ),
   ];
-  const urls = domain
-    ? paths
+  const origin = siteOrigin(domain);
+  const urls = paths
         .map(
           (path) =>
-            `<url><loc>${(domain + path).replaceAll("&", "&amp;").replaceAll("<", "&lt;")}</loc></url>`,
+            `<url><loc>${(origin + path).replaceAll("&", "&amp;").replaceAll("<", "&lt;")}</loc></url>`,
         )
-        .join("")
-    : "";
+        .join("");
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`,
     {

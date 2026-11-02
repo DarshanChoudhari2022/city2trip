@@ -30,11 +30,13 @@ export default async function Privacy() {
           </p>
           <h2>Enquiry delivery</h2>
           <p>
-            Submitted booking requests are securely stored for the GosaviOn
+            Submitted booking requests are stored in Supabase for the GosaviOn
             Group team to review and respond to. This includes the trip and
             contact details you provide. Only the authorised administrator can
             view these records. When email notifications are configured, these
             details are also sent through Web3Forms to the business inbox.
+            A saved request is an enquiry; your reservation is confirmed only
+            after the team agrees the arrangements with you.
           </p>
           <h2>Cookies and website operation</h2>
           <p>
@@ -55,10 +57,12 @@ export default async function Privacy() {
               <a href={"mailto:" + s.email}>{s.email}</a>
             </p>
           )}
+          {s.phone && <p><a href={"tel:" + s.phone}>{s.phone}</a></p>}
+          {s.address && <p>{s.address}</p>}
           <p className="notice">
-            Launch notice: this policy must be reviewed and completed with the
-            business’s verified contact and retention details before enquiry
-            collection begins.
+            The business is reviewing its retention and processing arrangements.
+            Contact the team above to ask about access to or deletion of your
+            enquiry details.
           </p>
         </article>
       </main>

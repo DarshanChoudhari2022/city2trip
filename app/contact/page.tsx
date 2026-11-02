@@ -20,7 +20,7 @@ export default async function Contact() {
           description="We’re here for the journeys that connect them."
         />
         <section className="container section about-grid">
-          <img src="/images/vehicle.webp" alt="A scenic road journey" />
+          <img src="/images/rental-vehicle-v2.png" alt="Toyota Innova Hycross, illustrative rental vehicle" />
           <div>
             <span className="eyebrow">LOCAL RIDES. OUTSTATION JOURNEYS.</span>
             <h2>

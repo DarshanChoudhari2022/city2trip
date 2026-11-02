@@ -1,21 +1,22 @@
 import type { Settings } from "@/lib/validation";
+import { siteOrigin } from "@/lib/seo-metadata";
 export default function StructuredData({ settings }: { settings: Settings }) {
-  if (!settings.domain) return null;
+  const origin = siteOrigin(settings.domain);
   const data = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": settings.domain + "/#website",
-        url: settings.domain,
+        "@id": origin + "/#website",
+        url: origin,
         name: "GosaviOn Group",
         description: "Local rides. Outstation journeys.",
       },
       {
         "@type": "Organization",
-        "@id": settings.domain + "/#organization",
+        "@id": origin + "/#organization",
         name: "GosaviOn Group",
-        url: settings.domain,
+        url: origin,
         ...(settings.phone ? { telephone: settings.phone } : {}),
         ...(settings.email ? { email: settings.email } : {}),
       },

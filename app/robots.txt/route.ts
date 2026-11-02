@@ -1,10 +1,10 @@
 import { readSettings } from "@/lib/repository";
+import { robotsText } from "@/lib/seo-metadata";
+import { env } from "@/lib/platform-env";
 export async function GET() {
   const { domain } = await readSettings();
   return new Response(
-    domain
-      ? `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\nSitemap: ${domain}/sitemap.xml\n`
-      : "User-agent: *\nDisallow: /\n",
+    robotsText(domain, env.VERCEL_ENV),
     { headers: { "Content-Type": "text/plain", "Cache-Control": "no-store" } },
   );
 }
